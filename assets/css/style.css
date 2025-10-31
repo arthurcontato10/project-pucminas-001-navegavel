@@ -1,0 +1,323 @@
+:root {
+  --bg: #f4f6fa;
+  --white: #ffffff;
+  --black: #000000;
+  --ok: #1f9d55;
+  --nok: #d9534f;
+  --primary: #eaf1fb;
+  --secondary: #e6f4ff;
+  --tertiary: #415a77;
+  --quartary: #1b263b;
+  --muted: #6b7280;
+  --shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
+  --opacity: rgba(255, 255, 255, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--quartary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* CABEÇALHO */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 28px;
+  background: linear-gradient(90deg, var(--tertiary), var(--quartary));
+  color: var(--white);
+}
+.brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.muted {
+  font-weight: 400;
+  opacity: 0.9;
+  margin-left: 8px;
+  font-size: 0.9rem;
+}
+.topnav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.topnav .navlink {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 8px;
+}
+.btn {
+  text-decoration: none;
+  background: var(--quartary);
+  color: var(--white);
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.btn:hover {
+  background: var(--tertiary);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--opacity);
+  margin-block: 2px;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.btn--ghost:hover {
+  background: var(--opacity);
+}
+
+.copyable {
+  background: var(--secondary);
+  color: var(--quartary);
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.copyable:hover {
+  background: var(--primary);
+  color: var(--quartary);
+}
+.copy-msg {
+  display: block;
+  margin-top: 6px;
+  color: var(--ok);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.center-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card {
+  background: var(--white);
+  width: 100%;
+  max-width: 880px;
+  padding: 26px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.card--narrow {
+  max-width: 520px;
+}
+.card--wide {
+  max-width: 980px;
+}
+.confirm-card {
+  text-align: left;
+}
+
+h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+}
+.lead {
+  color: var(--muted);
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.tab-card .tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.tab {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.tab.active {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--quartary);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* FORMULÁRIO */
+.form {
+  display: block;
+}
+.form .field {
+  margin-bottom: 12px;
+}
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--quartary);
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+  background: var(--white);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+/* CHECKBOX DAS DISCIPLINAS */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--secondary);
+  background: var(--primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.checkItem input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--quartary);
+  margin: 0;
+  flex: 0 0 auto;
+}
+.checkItem span {
+  font-weight: 600;
+  color: var(--quartary);
+}
+
+/* CHECKBOX HOVER */
+.checkItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px var(--shadow);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* MENSAGENS RÁPIDAS */
+.info {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--quartary);
+  border: 1px solid var(--primary);
+}
+.info--ok {
+  background: #e6f6ef;
+  border-color: #c8eed9;
+  color: var(--ok);
+}
+.info--err {
+  background: #fff0f0;
+  border-color: #ffd6d6;
+  color: var(--nok);
+}
+.error {
+  color: var(--nok);
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.userBadge {
+  color: var(--white);
+  font-weight: 600;
+  margin-right: 10px;
+  padding: 6px 10px;
+  background: var(--shadow);
+  border-radius: 8px;
+}
+.userBadge--active {
+  background: var(--opacity);
+}
+
+/* CONFIRMAÇÃO */
+.disc-list {
+  padding-left: 18px;
+  margin: 6px 0 0 0;
+}
+.disc-list li {
+  margin-bottom: 6px;
+}
+
+/* RODAPÉ */
+.footer {
+  padding: 18px 28px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 640px) {
+  #userBadge {
+    display: none;
+  }
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+  .topbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 16px;
+  }
+  .topnav {
+    align-self: flex-end;
+  }
+  .card {
+    padding: 18px;
+  }
+}

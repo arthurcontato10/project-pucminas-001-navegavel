@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Confirmação de Rematrícula</title>
+    <link rel="shortcut icon" href="./assets/images/pucMinaslLogoIcon.ico" />
+
+    <!-- INTER -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">
+          PUC Minas <span class="muted">• Confirmação</span>
+        </div>
+        <nav class="topnav">
+          <span id="userBadge" class="userBadge"></span>
+          <a href="rematricula.html" class="navlink">Editar</a>
+          <button id="logoutBtn" class="btn btn--ghost">Sair</button>
+        </nav>
+      </header>
+
+      <main class="center-area">
+        <section class="card card--wide confirm-card">
+          <h2>Resumo da Rematrícula</h2>
+
+          <div id="resumo">
+            <!-- CARREGADO PELO JS -->
+          </div>
+
+          <div class="actions" style="margin-top: 18px">
+            <button id="confirmBtn" class="btn">Confirmar Rematrícula</button>
+            <a href="rematricula.html" class="btn">Voltar e Editar</a>
+          </div>
+
+          <div id="result" class="info" style="display: none"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <small>© 2025 PUC Minas — Protótipo desenvolvido pelo Grupo 4.</small>
+      </footer>
+    </div>
+
+    <script>
+      // REQUERER LOGIN
+      if (localStorage.getItem("rematricula_logged") !== "true") {
+        window.location.href = "index.html";
+      }
+
+      const userBadge = document.getElementById("userBadge");
+      const currentUser = localStorage.getItem("rematricula_user") || "";
+      if (currentUser) {
+        userBadge.textContent = currentUser;
+        userBadge.classList.add("userBadge--active");
+      }
+
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("rematricula_logged");
+        localStorage.removeItem("rematricula_user");
+        window.location.href = "index.html";
+      });
+
+      const resumoEl = document.getElementById("resumo");
+      const confirmBtn = document.getElementById("confirmBtn");
+      const result = document.getElementById("result");
+
+      const selected = JSON.parse(
+        localStorage.getItem("rematricula_selected") || "[]"
+      );
+      const turno = localStorage.getItem("rematricula_turno") || "";
+
+      if (!selected.length || !turno) {
+        resumoEl.innerHTML =
+          '<p class="muted">Nenhuma seleção encontrada. <a href="rematricula.html">Voltar e selecionar</a>.</p>';
+        confirmBtn.disabled = true;
+      } else {
+        let html =
+          '<p><strong>Disciplinas selecionadas:</strong></p><ul class="disc-list">';
+        selected.forEach((d) => (html += `<li>${d}</li>`));
+        html += "</ul>";
+        html += `<p><strong>Turno:</strong> ${turno}</p>`;
+        resumoEl.innerHTML = html;
+      }
+
+      confirmBtn.addEventListener("click", () => {
+        // SIMULAR CONFIRMAÇÃO
+        const currentUser =
+          localStorage.getItem("rematricula_user") || "usuario";
+        // SALVAR NO HISTÓRICO DO USUÁRIO
+        let history = JSON.parse(
+          localStorage.getItem("rematricula_history") || "[]"
+        );
+        history.push({
+          user: currentUser,
+          selected,
+          turno,
+          date: new Date().toISOString(),
+        });
+        localStorage.setItem("rematricula_history", JSON.stringify(history));
+        localStorage.setItem("rematricula_confirmed", "true");
+
+        result.style.display = "block";
+        result.className = "info info--ok";
+        result.textContent =
+          "Rematrícula confirmada com sucesso! Suas aulas começam em breve!";
+        // OPCIONAL: ROLAR PARA O TOPO
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 200);
+      });
+    </script>
+  </body>
+</html>

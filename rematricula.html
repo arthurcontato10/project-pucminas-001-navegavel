@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rematrícula - Seleção de Disciplinas</title>
+    <link rel="shortcut icon" href="./assets/images/pucMinaslLogoIcon.ico" />
+
+    <!-- INTER -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">
+          PUC Minas <span class="muted">• Rematrícula</span>
+        </div>
+        <nav class="topnav">
+          <span class="userBadge" id="userBadge"></span>
+          <a href="confirmacao.html" class="navlink">Confirmar</a>
+          <button id="logoutBtn" class="btn btn--ghost">Sair</button>
+        </nav>
+      </header>
+
+      <main class="center-area">
+        <section class="card">
+          <h2>Selecione suas disciplinas</h2>
+          <p class="lead">
+            Marque as disciplinas que deseja cursar no próximo período.
+          </p>
+
+          <form id="rematriculaForm" class="form form--stack">
+            <div class="checkbox-grid">
+              <label class="checkItem"
+                ><input type="checkbox" value="Segurança da Informação" /><span
+                  >Segurança da Informação</span
+                ></label
+              >
+              <label class="checkItem"
+                ><input type="checkbox" value="Engenharia de Software" /><span
+                  >Engenharia de Software</span
+                ></label
+              >
+              <label class="checkItem"
+                ><input type="checkbox" value="Banco de Dados II" /><span
+                  >Banco de Dados II</span
+                ></label
+              >
+              <label class="checkItem"
+                ><input type="checkbox" value="Redes de Computadores" /><span
+                  >Redes de Computadores</span
+                ></label
+              >
+              <label class="checkItem"
+                ><input type="checkbox" value="Filosofia e Ética" /><span
+                  >Filosofia e Ética</span
+                ></label
+              >
+              <label class="checkItem"
+                ><input type="checkbox" value="Lógica Computacional" /><span
+                  >Lógica Computacional</span
+                ></label
+              >
+            </div>
+
+            <div class="field">
+              <label for="turno">Escolha o turno</label>
+              <select id="turno" required>
+                <option value="" disabled selected>Selecione o turno</option>
+                <option value="Manhã">Manhã</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noite">Noite</option>
+              </select>
+            </div>
+
+            <div class="actions">
+              <button type="button" id="salvarBtn" class="btn">
+                Salvar e Avançar
+              </button>
+              <button type="button" id="limparBtn" class="btn">Limpar</button>
+            </div>
+
+            <div id="msg" class="info" style="display: none"></div>
+          </form>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <small>© 2025 PUC Minas — Protótipo desenvolvido pelo Grupo 4.</small>
+      </footer>
+    </div>
+
+    <script>
+      // REQUERER LOGIN
+      if (localStorage.getItem("rematricula_logged") !== "true") {
+        window.location.href = "index.html";
+      }
+
+      // MOSTRAR USUÁRIO LOGADO
+      const userBadge = document.getElementById("userBadge");
+      const currentUser = localStorage.getItem("rematricula_user") || "";
+      if (currentUser) {
+        userBadge.textContent = currentUser;
+        userBadge.title = "Usuário logado";
+        userBadge.classList.add("userBadge--active");
+      }
+
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("rematricula_logged");
+        localStorage.removeItem("rematricula_user");
+        window.location.href = "index.html";
+      });
+
+      // CARREGAR SELEÇÕES SALVAS
+      const storedSelected = JSON.parse(
+        localStorage.getItem("rematricula_selected") || "[]"
+      );
+      const storedTurno = localStorage.getItem("rematricula_turno") || "";
+
+      document
+        .querySelectorAll('.checkItem input[type="checkbox"]')
+        .forEach((cb) => {
+          if (storedSelected.includes(cb.value)) cb.checked = true;
+        });
+
+      if (storedTurno) {
+        document.getElementById("turno").value = storedTurno;
+      }
+
+      const salvarBtn = document.getElementById("salvarBtn");
+      const limparBtn = document.getElementById("limparBtn");
+      const msg = document.getElementById("msg");
+
+      function showMsg(text, success = true) {
+        msg.style.display = "block";
+        msg.textContent = text;
+        msg.className = success ? "info info--ok" : "info info--err";
+        setTimeout(() => (msg.style.display = "none"), 3000);
+      }
+
+      salvarBtn.addEventListener("click", () => {
+        const checked = Array.from(
+          document.querySelectorAll('.checkItem input[type="checkbox"]:checked')
+        ).map((i) => i.value);
+        const turno = document.getElementById("turno").value;
+
+        if (checked.length === 0) {
+          showMsg("Selecione ao menos uma disciplina.", false);
+          return;
+        }
+        if (!turno) {
+          showMsg("Escolha o turno antes de avançar.", false);
+          return;
+        }
+
+        // SALVAR NO LOCAL STORAGE
+        localStorage.setItem("rematricula_selected", JSON.stringify(checked));
+        localStorage.setItem("rematricula_turno", turno);
+
+        // CONFIRMAR AVANÇO
+        window.location.href = "confirmacao.html";
+      });
+
+      limparBtn.addEventListener("click", () => {
+        document
+          .querySelectorAll('.checkItem input[type="checkbox"]')
+          .forEach((cb) => (cb.checked = false));
+        document.getElementById("turno").value = "";
+        localStorage.removeItem("rematricula_selected");
+        localStorage.removeItem("rematricula_turno");
+        showMsg("Seleções limpas.", true);
+      });
+    </script>
+  </body>
+</html>

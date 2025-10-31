@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sistema de Rematrícula</title>
+    <link rel="shortcut icon" href="./assets/images/pucMinaslLogoIcon.ico" />
+
+    <!-- INTER -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">
+          PUC Minas
+          <span class="muted">• Sistema de Rematrícula (Protótipo)</span>
+        </div>
+      </header>
+
+      <main class="center-area">
+        <section class="card card--narrow tab-card">
+          <div class="tabs">
+            <button class="tab active" data-target="loginPane">Entrar</button>
+            <button class="tab" data-target="registerPane">Registrar</button>
+          </div>
+
+          <!-- ENTRAR -->
+          <div id="loginPane" class="pane">
+            <h2>Entrar no sistema</h2>
+            <p class="lead">Use sua conta para acessar a rematrícula.</p>
+
+            <form id="loginForm" class="form">
+              <label for="usuario">Usuário (e-mail)</label>
+              <input
+                id="usuario"
+                name="usuario"
+                type="email"
+                placeholder="Digite seu e-mail institucional"
+                required
+              />
+
+              <label for="senha">Senha</label>
+              <input
+                id="senha"
+                name="senha"
+                type="password"
+                placeholder="Digite sua senha"
+                required
+              />
+
+              <button type="submit" class="btn">Entrar</button>
+              <div
+                id="loginError"
+                class="error"
+                aria-live="polite"
+                style="display: none"
+              ></div>
+            </form>
+
+            <div class="help">
+              <strong>Conta de protótipo:</strong>
+              <span class="copyable" data-copy="admin@puc">admin@puc</span> /
+              <span class="copyable" data-copy="admin">admin</span>
+              <span id="copyMsg" class="copy-msg" style="display: none"
+                >Copiado!</span
+              >
+            </div>
+          </div>
+
+          <!-- REGISTRAR -->
+          <div id="registerPane" class="pane" style="display: none">
+            <h2>Criar nova conta</h2>
+            <p class="lead">
+              Cadastre um usuário para acessar o protótipo. <br />
+              Senha mínima: 4 caracteres.
+            </p>
+
+            <form id="registerForm" class="form">
+              <label for="regEmail">E-mail institucional</label>
+              <input
+                id="regEmail"
+                type="email"
+                placeholder="E-mail@puc"
+                required
+              />
+
+              <label for="regPass">Senha</label>
+              <input
+                id="regPass"
+                type="password"
+                placeholder="Crie uma senha"
+                required
+              />
+
+              <label for="regPass2">Confirmar sua senha</label>
+              <input
+                id="regPass2"
+                type="password"
+                placeholder="Repita a senha criada"
+                required
+              />
+
+              <button type="submit" class="btn">Registrar</button>
+              <div id="regMsg" class="info" style="display: none"></div>
+            </form>
+
+            <div class="help muted">
+              Os usuários ficam salvos localmente no navegador.
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <small>© 2025 PUC Minas — Protótipo desenvolvido pelo Grupo 4.</small>
+      </footer>
+    </div>
+
+    <script>
+      // COPIAR TEXTO PARA A ÁREA DE TRANSFERÊNCIA
+      document.querySelectorAll(".copyable").forEach((el) => {
+        el.addEventListener("click", () => {
+          const text = el.getAttribute("data-copy");
+          navigator.clipboard.writeText(text);
+          const msg = document.getElementById("copyMsg");
+          msg.style.display = "block";
+          msg.textContent = `“${text}” copiado!`;
+          setTimeout(() => (msg.style.display = "none"), 1800);
+        });
+      });
+
+      // LOCAL STORAGE
+      function getUsers() {
+        try {
+          return JSON.parse(localStorage.getItem("rematricula_users") || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function setUsers(list) {
+        localStorage.setItem("rematricula_users", JSON.stringify(list));
+      }
+
+      // CONTRA PROTÓTIPO
+      (function ensureAdmin() {
+        const users = getUsers();
+        const hasAdmin = users.some(
+          (u) => u.email && u.email.toLowerCase() === "admin@puc"
+        );
+        if (!hasAdmin) {
+          users.push({ email: "admin@puc", pass: "admin" });
+          setUsers(users);
+        }
+      })();
+
+      // CRIAR OU ENTRAR NA CONTA
+      document.querySelectorAll(".tab").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          btn.classList.add("active");
+          const target = btn.dataset.target;
+          document
+            .querySelectorAll(".pane")
+            .forEach(
+              (p) => (p.style.display = p.id === target ? "block" : "none")
+            );
+        });
+      });
+
+      // ENTRAR
+      const loginForm = document.getElementById("loginForm");
+      const loginError = document.getElementById("loginError");
+
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        loginError.style.display = "none";
+        const email = document
+          .getElementById("usuario")
+          .value.trim()
+          .toLowerCase();
+        const pass = document.getElementById("senha").value;
+        const users = getUsers();
+        const match = users.find(
+          (u) => u.email.toLowerCase() === email && u.pass === pass
+        );
+        if (match) {
+          localStorage.setItem("rematricula_logged", "true");
+          localStorage.setItem("rematricula_user", email);
+          window.location.href = "rematricula.html";
+        } else {
+          loginError.style.display = "block";
+          loginError.textContent =
+            "Usuário ou senha incorretos. Verifique e tente novamente.";
+        }
+      });
+
+      // REDIRECIONAR SE JÁ ESTIVER LOGADO
+      if (localStorage.getItem("rematricula_logged") === "true") {
+        window.location.href = "rematricula.html";
+      }
+
+      // REGISTRAR
+      const registerForm = document.getElementById("registerForm");
+      const regMsg = document.getElementById("regMsg");
+
+      function showReg(msg, ok = true) {
+        regMsg.style.display = "block";
+        regMsg.textContent = msg;
+        regMsg.className = ok ? "info info--ok" : "info info--err";
+        setTimeout(() => (regMsg.style.display = "none"), 3500);
+      }
+
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document
+          .getElementById("regEmail")
+          .value.trim()
+          .toLowerCase();
+        const p1 = document.getElementById("regPass").value;
+        const p2 = document.getElementById("regPass2").value;
+
+        if (!email || !p1 || !p2)
+          return showReg("Preencha todos os campos.", false);
+        if (p1.length < 4)
+          return showReg("Senha muito curta (mínimo 4 caracteres).", false);
+        if (p1 !== p2) return showReg("As senhas não coincidem.", false);
+
+        const users = getUsers();
+        if (users.some((u) => u.email.toLowerCase() === email)) {
+          return showReg("Já existe uma conta com esse e-mail.", false);
+        }
+
+        users.push({ email, pass: p1 });
+        setUsers(users);
+        showReg("Conta criada com sucesso. Você já pode entrar.", true);
+
+        // TROCAR PARA A TELA DE LOGIN
+        document.querySelector('[data-target="loginPane"]').click();
+        document.getElementById("usuario").value = email;
+        document.getElementById("senha").value = "";
+      });
+    </script>
+  </body>
+</html>
