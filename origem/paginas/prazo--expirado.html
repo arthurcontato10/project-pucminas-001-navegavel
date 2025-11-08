@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rematrícula Fora do Prazo - PUC Minas</title>
+    <link rel="shortcut icon" href="../imagens/pucMinasCanvasLogo.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../estilos/estilo--principal.css" />
+    <link rel="stylesheet" href="../estilos/estilo--responsivo.css" />
+  </head>
+  <body>
+    <div class="repositorio--mensagens" id="repositorioMensagens"></div>
+    <div class="pagina">
+      <header class="barra--superior">
+        <div class="marca--sistema">
+          PUC Minas <span class="texto--suave">• Situação de Rematrícula</span>
+        </div>
+        <nav class="navegacao--superior">
+          <span
+            class="perfil--usuario perfil--usuario--ativo"
+            id="perfilUsuario"
+          ></span
+          ><a
+            href="../../index.html"
+            class="link--navegacao"
+            id="linkVoltarRematricula"
+            >Voltar para Rematrícula</a
+          >
+        </nav>
+      </header>
+      <main class="area--central">
+        <section class="cartao--container cartao--largo">
+          <div class="repositorio--status">
+            <div class="alerta--status">
+              <i class="fa fa-exclamation-triangle"></i>
+              <h1>Prazo de Rematrícula Expirado</h1>
+              <p>
+                O período para rematrícula encerrou em
+                <strong>01/12/2025</strong>.
+              </p>
+              <p class="texto--suave">
+                Mas não se preocupe! Temos alternativas para você:
+              </p>
+            </div>
+            <div class="grade--opcoes">
+              <div class="cartao--opcao">
+                <h3>
+                  <i class="fa fa-list-ol icone--secao"></i> Lista de Espera
+                </h3>
+                <p>
+                  Entre para nossa lista de espera e seja notificado quando
+                  surgirem vagas.
+                </p>
+                <div
+                  class="lista--espera"
+                  id="listaEspera"
+                  style="display: none"
+                >
+                  <p>
+                    <strong>Sua posição atual:</strong> 15ª
+                    <span class="selo--prioridade">Prioridade: Normal</span>
+                  </p>
+                  <p class="texto--suave">Estimativa: 1-2 semanas</p>
+                </div>
+                <div class="grupo--botoes">
+                  <button
+                    class="botao--principal"
+                    onclick="entrarListaEspera()"
+                  >
+                    <i class="fa fa-plus-circle"></i> Entrar na Lista de Espera</button
+                  ><button
+                    class="botao--principal botao--demonstracao"
+                    onclick="verDetalhesEspera()"
+                  >
+                    <i class="fa fa-info-circle"></i> Detalhes
+                  </button>
+                </div>
+              </div>
+              <div class="cartao--opcao">
+                <h3>
+                  <i class="fa fa-file-alt icone--secao"></i> Solicitação de
+                  Exceção
+                </h3>
+                <p>Justifique seu atraso e solicite uma avaliação especial.</p>
+                <form id="formularioSolicitacao">
+                  <div class="grupo--formulario">
+                    <label for="justificativa">Justificativa:</label
+                    ><textarea
+                      id="justificativa"
+                      placeholder="Descreva os motivos do atraso na rematrícula..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="grupo--formulario">
+                    <label for="documentos">Anexar Documentos:</label>
+                    <div class="area--enviar-arquivo">
+                      <div
+                        class="enviar--arquivo"
+                        onclick="document.getElementById('entradaArquivo').click()"
+                      >
+                        <i class="fa fa-cloud-upload-alt"></i>
+                        <p>Clique para anexar documentos comprobatórios</p>
+                        <small class="texto--suave"
+                          >PDF, JPG ou PNG (máx. 10MB cada - máximo 4
+                          arquivos)</small
+                        >
+                      </div>
+                      <input
+                        type="file"
+                        id="entradaArquivo"
+                        style="display: none"
+                        multiple
+                        accept=".pdf,.jpg,.png,.jpeg"
+                        data-tamanho-maximo="10"
+                        data-arquivos-maximo="4"
+                      />
+                      <div
+                        class="arquivos--enviados"
+                        id="arquivosEnviados"
+                      ></div>
+                    </div>
+                  </div>
+                  <button type="submit" class="botao--principal">
+                    <i class="fa fa-paper-plane"></i> Enviar Solicitação
+                  </button>
+                </form>
+              </div>
+              <div class="cartao--opcao cartao--opcao--completo">
+                <h3>
+                  <i class="fa fa-exchange-alt icone--secao"></i> Modalidades
+                  Alternativas
+                </h3>
+                <p>
+                  Explore outras opções disponíveis para continuar seus estudos:
+                </p>
+                <ul class="lista--sem-marcadores lista--modalidades">
+                  <li>
+                    <i class="fa fa-clock icone--modalidade"></i>
+                    <div>
+                      <strong>Mudança de Turno:</strong> Vagas disponíveis em
+                      outros horários
+                    </div>
+                  </li>
+                  <li>
+                    <i class="fa fa-book icone--modalidade"></i>
+                    <div>
+                      <strong>Disciplinas Isoladas:</strong> Cursar matérias
+                      específicas disponíveis
+                    </div>
+                  </li>
+                  <li>
+                    <i class="fa fa-pause icone--modalidade"></i>
+                    <div>
+                      <strong>Trancamento Parcial:</strong> Manter vínculo ativo
+                      com a instituição
+                    </div>
+                  </li>
+                  <li>
+                    <i class="fa fa-laptop icone--modalidade"></i>
+                    <div>
+                      <strong>EAD:</strong> Migrar para ensino a distância com
+                      mais flexibilidade
+                    </div>
+                  </li>
+                </ul>
+                <div class="grupo--botoes">
+                  <button
+                    class="botao--principal botao--demonstracao"
+                    onclick="agendarAtendimento()"
+                  >
+                    <i class="fa fa-calendar-check"></i> Agendar Atendimento
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="acoes--botoes"
+              style="margin-top: 2rem; justify-content: center"
+            >
+              <a
+                href="../../index.html"
+                class="botao--principal botao--demonstracao"
+                id="botaoVoltarPrincipal"
+                ><i class="fa fa-arrow-left"></i> Voltar para Rematrícula</a
+              >
+            </div>
+            <div class="informacao--contato">
+              <h4>
+                <i class="fa fa-headset icone--secao"></i> Precisa de Ajuda?
+              </h4>
+              <p>Entre em contato com a secretaria acadêmica:</p>
+              <ul class="lista--sem-marcadores">
+                <li>
+                  <i class="fa fa-phone icone--lista"></i
+                  ><strong>Telefone:</strong> (31) 3319-4257
+                </li>
+                <li>
+                  <i class="fa fa-envelope icone--lista"></i
+                  ><strong>E-mail:</strong> secretaria@pucminas.br
+                </li>
+                <li>
+                  <i class="fa fa-building icone--lista"></i
+                  ><strong>Atendimento Presencial:</strong> Segunda a Sexta,
+                  8h-18h
+                </li>
+                <li>
+                  <i class="fa fa-globe icone--lista"></i
+                  ><strong>Atendimento Online:</strong> Disponível 24h
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="rodape">
+        <small
+          >© 2025 Grupo 4 — Protótipo rematrícula navegável — PUC Minas.</small
+        >
+      </footer>
+    </div>
+    <script>
+      function mostrarMensagem(e, t = "info") {
+        const n = document.getElementById("repositorioMensagens"),
+          c = document.createElement("div");
+        let o = "fas fa-info-circle";
+        t === "sucesso"
+          ? (o = "fas fa-check-circle")
+          : t === "erro"
+          ? (o = "fas fa-times-circle")
+          : t === "alerta"
+          ? (o = "fas fa-exclamation-triangle")
+          : (o = "fas fa-info-circle"),
+          (c.className =
+            t === "erro"
+              ? "mensagem--item mensagem--erro"
+              : t === "alerta"
+              ? "mensagem--item mensagem--alerta"
+              : "mensagem--item mensagem--sucesso"),
+          (c.innerHTML = `<i class="${o}"></i><div class="conteudo--mensagem">${e}</div><button class="fechar--mensagem"><i class="fas fa-times"></i></button>`),
+          n.appendChild(c);
+        const i = c.querySelector(".fechar--mensagem"),
+          a = () => {
+            (c.style.animation = "mensagemSaida 0.4s ease forwards"),
+              setTimeout(() => {
+                n.contains(c) && n.removeChild(c);
+              }, 400);
+          };
+        i.addEventListener("click", a), setTimeout(a, 1e4);
+      }
+      function limparDadosRematricula() {
+        localStorage.removeItem("usuario_logado");
+        localStorage.removeItem("nome_usuario");
+        localStorage.removeItem("disciplinas_selecionadas");
+        localStorage.removeItem("turno_selecionado");
+        localStorage.removeItem("dados_financeiros");
+        localStorage.setItem("aba_ativa_registro", "true");
+        window.location.href = "../../index.html";
+      }
+      const usuarioAtual = localStorage.getItem("nome_usuario") || "Estudante";
+      document.getElementById("perfilUsuario").textContent = usuarioAtual;
+      let arquivosEnviados = [];
+      function atualizarExibicaoArquivos() {
+        const e = document.getElementById("arquivosEnviados");
+        (e.innerHTML = ""),
+          arquivosEnviados.forEach((t, n) => {
+            const c = document.createElement("div");
+            (c.className = "arquivo--enviado"),
+              (c.innerHTML = `<div class="informacao--arquivo"><i class="fa fa-file"></i><div class="detalhes--arquivo"><div class="nome--arquivo">${
+                t.name
+              }</div><div class="tamanho--arquivo">${
+                t.size > 1048576
+                  ? (t.size / 1048576).toFixed(1) + " MB"
+                  : (t.size / 1024).toFixed(1) + " KB"
+              }</div></div></div><button type="button" class="remover--arquivo" onclick="removerArquivo(${n})"><i class="fa fa-times"></i></button>`),
+              e.appendChild(c);
+          });
+      }
+      function removerArquivo(e) {
+        arquivosEnviados.splice(e, 1), atualizarExibicaoArquivos();
+      }
+      document
+        .getElementById("entradaArquivo")
+        .addEventListener("change", function (e) {
+          const t = e.target.files;
+          if (arquivosEnviados.length + t.length > 4)
+            return (
+              mostrarMensagem(
+                "<p><strong>Limite de Arquivos Excedido</strong></p><p>Você pode enviar no máximo 4 documentos.</p><br><p>Arquivos atuais: " +
+                  arquivosEnviados.length +
+                  "</p><p>Novos arquivos: " +
+                  t.length +
+                  "</p><br><p>Remova alguns arquivos antes de adicionar mais.</p>",
+                "erro"
+              ),
+              !1
+            );
+          for (let n = 0; n < t.length; n++) {
+            const c = t[n];
+            if (c.size > 10485760)
+              return (
+                mostrarMensagem(
+                  "<p><strong>Arquivo Muito Grande</strong></p><p>O arquivo " +
+                    c.name +
+                    " excede o limite de 10MB.</p><br><p>Tamanho do arquivo: " +
+                    (c.size / 1048576).toFixed(1) +
+                    " MB</p><br><p>Por favor, selecione um arquivo menor.</p>",
+                  "erro"
+                ),
+                !1
+              );
+            if (
+              arquivosEnviados.some(
+                (e) =>
+                  e.name === c.name &&
+                  e.size === c.size &&
+                  e.lastModified === c.lastModified
+              )
+            )
+              return (
+                mostrarMensagem(
+                  "<p><strong>Arquivo Já Adicionado</strong></p><p>O arquivo " +
+                    c.name +
+                    " já foi selecionado anteriormente.</p><br><p>Verifique a lista de documentos anexados.</p><br><p>Se necessário, remova o arquivo existente antes de adicionar novamente.</p>",
+                  "erro"
+                ),
+                !1
+              );
+            arquivosEnviados.push(c);
+          }
+          atualizarExibicaoArquivos(),
+            mostrarMensagem(
+              "<p><strong>Arquivos Adicionados com Sucesso</strong></p><p>Quantidade: " +
+                t.length +
+                " arquivo(s) anexado(s)</p><br><p>Total de arquivos: " +
+                arquivosEnviados.length +
+                "/4</p><br><p>Continue preenchendo o formulário e clique em Enviar Solicitação</p>",
+              "sucesso"
+            );
+        });
+      function entrarListaEspera() {
+        (document.getElementById("listaEspera").style.display = "block"),
+          mostrarMensagem(
+            "<p><strong>Adicionado à Lista de Espera</strong></p><p>Posição atual: 15ª na fila</p><br><p>Estimativa de espera: 1-2 semanas</p><br><p>Aviso importante: Enviaremos notificação por e-mail quando houver vaga disponível.</p><br><p>Mantenha seu cadastro atualizado para receber as comunicações.</p>",
+            "sucesso"
+          );
+      }
+      function verDetalhesEspera() {
+        mostrarMensagem(
+          "<p><strong>Detalhes da Lista de Espera</strong></p><p>Sistema de Prioridade: Baseado no histórico acadêmico e tempo de curso</p><br><p>Notificação: Envio automático por e-mail quando surgirem vagas</p><br><p>Alocação de Vagas: Distribuição por ordem de chegada na lista</p><br><p>Validade: Renovação automática a cada semestre</p><br><p>Monitoramento: Você pode acompanhar sua posição pelo sistema</p>",
+          "info"
+        );
+      }
+      document
+        .getElementById("formularioSolicitacao")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const t = document.getElementById("justificativa").value;
+          if (t.length < 20)
+            return (
+              mostrarMensagem(
+                "<p><strong>Justificativa Insuficiente</strong></p><p>Atenção: Forneça uma justificativa mais detalhada.</p><br><p>Requisito mínimo: 20 caracteres necessários</p><br><p>Dica: Inclua datas, motivos específicos e qualquer documentação relevante.</p>",
+                "erro"
+              ),
+              !1
+            );
+          mostrarMensagem(
+            "<p><strong>Solicitação Enviada com Sucesso</strong></p><p>Prazo de análise: Nossa equipe analisará seu pedido em até 48 horas</p><br><p>Comunicação: Você receberá uma resposta por e-mail</p><br><p>Acompanhamento: Mantenha-se atento à sua caixa de entrada</p><br><p>Documentação: Esteja preparado para fornecer informações adicionais se necessário</p>",
+            "sucesso"
+          ),
+            this.reset(),
+            (arquivosEnviados = []),
+            atualizarExibicaoArquivos();
+        });
+      function agendarAtendimento() {
+        mostrarMensagem(
+          "<p><strong>Agendamento de Atendimento</strong></p><p>Horários disponíveis para esta semana:</p><br><p>Segunda-feira: 14h às 16h</p><p>Quarta-feira: 10h às 12h</p><p>Sexta-feira: 16h às 18h</p><br><p>Contato para agendamento:</p><p>Telefone: (31) 3319-4257</p><br><p>Informações necessárias: Nome completo, matrícula e motivo do atendimento</p>",
+          "info"
+        );
+      }
+      document
+        .getElementById("linkVoltarRematricula")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          limparDadosRematricula();
+        });
+      document
+        .getElementById("botaoVoltarPrincipal")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          limparDadosRematricula();
+        });
+    </script>
+  </body>
+</html>

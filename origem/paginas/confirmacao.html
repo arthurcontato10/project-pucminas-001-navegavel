@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Confirmação de Rematrícula</title>
+    <link rel="shortcut icon" href="../imagens/pucMinasCanvasLogo.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../estilos/estilo--principal.css" />
+    <link rel="stylesheet" href="../estilos/estilo--responsivo.css" />
+  </head>
+
+  <body>
+    <div class="repositorio--mensagens" id="repositorioMensagens"></div>
+    <div class="pagina">
+      <header class="barra--superior">
+        <div class="marca--sistema">
+          PUC Minas <span class="texto--suave">• Confirmação</span>
+        </div>
+        <nav class="navegacao--superior">
+          <span id="perfilUsuario" class="perfil--usuario"
+            ><i class="fas fa-user-circle"></i></span
+          ><a href="disciplinas.html" class="link--navegacao">Editar</a
+          ><button id="botaoSair" class="botao--principal">Sair</button>
+        </nav>
+      </header>
+      <main class="area--central">
+        <section class="cartao--container cartao--largo cartao--confirmacao">
+          <h2 class="titulo--principal">Confirmação da Rematrícula</h2>
+          <div id="resumo"></div>
+          <div class="acoes--botoes" style="margin-top: 18px">
+            <button id="botaoConfirmar" class="botao--principal">
+              Confirmar Rematrícula</button
+            ><a
+              href="disciplinas.html"
+              class="botao--principal botao--demonstracao"
+              ><i class="fas fa-pencil-alt"></i> Editar</a
+            >
+          </div>
+        </section>
+      </main>
+      <footer class="rodape">
+        <small>© 2025 PUC Minas — Protótipo desenvolvido pelo Grupo 4.</small>
+      </footer>
+    </div>
+    <script>
+      function mostrarMensagem(e, t = "info") {
+        const n = document.getElementById("repositorioMensagens"),
+          c = document.createElement("div");
+        let o = "fas fa-info-circle";
+        t === "sucesso"
+          ? (o = "fas fa-check-circle")
+          : t === "erro"
+          ? (o = "fas fa-times-circle")
+          : t === "alerta"
+          ? (o = "fas fa-exclamation-triangle")
+          : (o = "fas fa-info-circle"),
+          (c.className =
+            t === "erro"
+              ? "mensagem--item mensagem--erro"
+              : t === "alerta"
+              ? "mensagem--item mensagem--alerta"
+              : "mensagem--item mensagem--sucesso"),
+          (c.innerHTML = `<i class="${o}"></i><div class="conteudo--mensagem">${e}</div><button class="fechar--mensagem"><i class="fas fa-times"></i></button>`),
+          n.appendChild(c);
+        const i = c.querySelector(".fechar--mensagem"),
+          a = () => {
+            (c.style.animation = "mensagemSaida 0.4s ease forwards"),
+              setTimeout(() => {
+                n.contains(c) && n.removeChild(c);
+              }, 400);
+          };
+        i.addEventListener("click", a), setTimeout(a, 1e4);
+      }
+      function limparDadosRematricula() {
+        localStorage.removeItem("usuario_logado");
+        localStorage.removeItem("nome_usuario");
+        localStorage.removeItem("disciplinas_selecionadas");
+        localStorage.removeItem("turno_selecionado");
+        localStorage.removeItem("dados_financeiros");
+        localStorage.setItem("aba_ativa_registro", "true");
+        window.location.href = "../../index.html";
+      }
+      if (localStorage.getItem("usuario_logado") !== "true") {
+        window.location.href = "../../index.html";
+      }
+      const perfilUsuario = document.getElementById("perfilUsuario");
+      const usuarioAtual = localStorage.getItem("nome_usuario") || "";
+      if (usuarioAtual) {
+        (perfilUsuario.textContent = usuarioAtual),
+          perfilUsuario.classList.add("perfil--usuario--ativo");
+      }
+      const botaoSair = document.getElementById("botaoSair");
+      botaoSair.addEventListener("click", () => {
+        limparDadosRematricula();
+      });
+      const resumoEl = document.getElementById("resumo");
+      const botaoConfirmar = document.getElementById("botaoConfirmar");
+      const botoesEditar = document.querySelectorAll(
+        'a[href="disciplinas.html"]'
+      );
+      const selecionadas = JSON.parse(
+        localStorage.getItem("disciplinas_selecionadas") || "[]"
+      );
+      const turno = localStorage.getItem("turno_selecionado") || "";
+      const dadosFinanceiros = JSON.parse(
+        localStorage.getItem("dados_financeiros") ||
+          '{"valorMensal":0,"valorTotal":0,"desconto":0}'
+      );
+      if (!selecionadas.length || !turno) {
+        (resumoEl.innerHTML =
+          '<p class="texto--suave">Nenhuma seleção encontrada. <a href="disciplinas.html">Voltar e selecionar</a>.</p>'),
+          (botaoConfirmar.disabled = true);
+      } else {
+        let horario = "";
+        turno.includes("Manhã")
+          ? (horario = "08h - 10h")
+          : turno.includes("Tarde")
+          ? (horario = "14h - 16h")
+          : turno.includes("Noite")
+          ? (horario = "20h - 22h")
+          : (horario = "Flexível (EAD)");
+        let informacaoModalidade = "";
+        turno.includes("EAD")
+          ? (informacaoModalidade =
+              '<p><strong><i class="fas fa-laptop icone--destaque"></i> Plataforma:</strong> Canvas PUC Minas</p><p><strong><i class="fas fa-clock icone--destaque"></i> Acesso:</strong> 24 horas por dia</p><p><strong><i class="fas fa-video icone--destaque"></i> Aulas:</strong> Gravadas e ao vivo</p>')
+          : (informacaoModalidade =
+              '<p><strong><i class="fas fa-building icone--destaque"></i> Local:</strong> Campus PUC Minas</p><p><strong><i class="fas fa-clock icone--destaque"></i> Horário:</strong> ' +
+              horario +
+              '</p><p><strong><i class="fas fa-calendar icone--destaque"></i> Dias:</strong> Segunda, Quarta e Sexta</p>');
+        const valorOriginal = selecionadas.length * 250;
+        let html =
+          '<div class="grade--opcoes"><div class="cartao--opcao"><h3><i class="fas fa-book-open icone--destaque"></i> Disciplinas Selecionadas</h3><ul class="lista--discos">';
+        selecionadas.forEach(
+          (d) =>
+            (html += `<li><i class="fas fa-book icone--lista"></i>${d}</li>`)
+        ),
+          (html += `</ul><div class="estatisticas--resumo"><p><i class="fas fa-chart-bar icone--destaque"></i><strong> Total de Disciplinas:</strong> ${selecionadas.length}</p><p><i class="fas fa-clock icone--destaque"></i><strong> Carga Horária Semanal:</strong> 8h</p></div></div><div class="cartao--opcao"><h3><i class="fas fa-clock icone--destaque"></i> Modalidade e Horários</h3>${informacaoModalidade}<div class="caracteristicas--resumo"><p><i class="fas fa-star icone--destaque"></i><strong> Benefícios Incluídos:</strong></p><ul><li><i class="fas fa-wifi icone--lista"></i> Acesso à Biblioteca Virtual</li><li><i class="fas fa-laptop icone--lista"></i> Laboratórios de Informática</li><li><i class="fas fa-chalkboard-teacher icone--lista"></i> Suporte dos Professores</li><li><i class="fas fa-graduation-cap icone--lista"></i> Certificado PUC Minas</li><li><i class="fas fa-award icone--lista"></i> Reconhecimento MEC</li><li><i class="fas fa-handshake icone--lista"></i> Parcerias com +200 empresas</li><li><i class="fas fa-briefcase icone--lista"></i> Programa de Estágios</li><li><i class="fas fa-globe-americas icone--lista"></i> Intercâmbio Internacional</li></ul></div></div><div class="cartao--opcao cartao--opcao--completo"><h3><i class="fas fa-calculator icone--destaque"></i> Informações Financeiras</h3><div class="principal--financeiro">`);
+        dadosFinanceiros.desconto > 0
+          ? (html += `<div class="valor--financeiro desconto-aplicado"><div class="valor--original">R$ ${valorOriginal.toLocaleString(
+              "pt-BR",
+              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+            )}</div><div class="valor--final">R$ ${dadosFinanceiros.valorMensal.toLocaleString(
+              "pt-BR",
+              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+            )}</div><div class="rotulo--valor">Mensalidade com Desconto</div></div>`)
+          : (html += `<div class="valor--financeiro"><div class="valor--final unico">R$ ${dadosFinanceiros.valorMensal.toLocaleString(
+              "pt-BR",
+              { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+            )}</div><div class="rotulo--valor">Mensalidade</div></div>`),
+          (html += `</div><div class="cartoes--pagamento" style="grid-template-columns:repeat(2,1fr)"><div class="cartao--pagamento cartao--pagamento--azul"><div class="icone--pagamento"><i class="fas fa-mobile-alt"></i></div><div class="informacao--pagamento"><div class="titulo--pagamento">PIX</div><div class="descricao--pagamento">Pagamento instantâneo</div></div></div><div class="cartao--pagamento cartao--pagamento--azul"><div class="icone--pagamento"><i class="fas fa-credit-card"></i></div><div class="informacao--pagamento"><div class="titulo--pagamento">Cartão de Crédito</div><div class="descricao--pagamento">Até 12x sem juros</div></div></div><div class="cartao--pagamento cartao--pagamento--azul"><div class="icone--pagamento"><i class="fas fa-barcode"></i></div><div class="informacao--pagamento"><div class="titulo--pagamento">Boleto Bancário</div><div class="descricao--pagamento">Pagamento em até 3 dias</div></div></div><div class="cartao--pagamento cartao--pagamento--azul"><div class="icone--pagamento"><i class="fas fa-graduation-cap"></i></div><div class="informacao--pagamento"><div class="titulo--pagamento">Bolsa de Estudos</div><div class="descricao--pagamento">Programas de incentivo</div></div></div></div><div class="opcoes--financiamento"><h4><i class="fas fa-university icone--destaque"></i> Opções de Financiamento</h4><div class="cartoes--financiamento" style="grid-template-columns:repeat(2,1fr)"><div class="cartao--financiamento"><div class="icone--financiamento"><i class="fas fa-graduation-cap"></i></div><div class="informacao--financiamento"><div class="titulo--financiamento">FIES</div><div class="descricao--financiamento">Financiamento Estudantil do Governo</div><div class="detalhes--financiamento">Juros baixos | Prazo longo</div></div></div><div class="cartao--financiamento"><div class="icone--financiamento"><i class="fas fa-medal"></i></div><div class="informacao--financiamento"><div class="titulo--financiamento">ProUni</div><div class="descricao--financiamento">Programa Universidade para Todos</div><div class="detalhes--financiamento">Bolsa parcial/integral | Baseado na renda</div></div></div><div class="cartao--financiamento" style="grid-column:1/-1"><div class="icone--financiamento"><i class="fas fa-hand-holding-usd"></i></div><div class="informacao--financiamento"><div class="titulo--financiamento">Crédito Educativo</div><div class="descricao--financiamento">Parcerias com bancos</div><div class="detalhes--financiamento">Santander | Itaú | Bradesco</div></div></div></div></div><div class="informacao--prazo"><i class="fas fa-hourglass-half"></i><span>Pagamento da primeira parcela em até <strong>10 dias úteis</strong></span></div></div></div>`),
+          (resumoEl.innerHTML = html);
+      }
+      botaoConfirmar.addEventListener("click", () => {
+        const usuarioAtual = localStorage.getItem("nome_usuario") || "usuario";
+        let historico = JSON.parse(
+          localStorage.getItem("historico_rematricula") || "[]"
+        );
+        historico.push({
+          user: usuarioAtual,
+          selecionadas,
+          turno,
+          date: new Date().toISOString(),
+        }),
+          localStorage.setItem(
+            "historico_rematricula",
+            JSON.stringify(historico)
+          ),
+          localStorage.setItem("rematricula_confirmada", "true"),
+          (botaoConfirmar.disabled = true),
+          (botaoConfirmar.textContent = "Rematrícula Confirmada"),
+          botoesEditar.forEach((e) => {
+            (e.style.opacity = "0.5"),
+              (e.style.pointerEvents = "none"),
+              (e.style.cursor = "not-allowed"),
+              (e.innerHTML =
+                '<i class="fas fa-pencil-alt"></i> Edição Bloqueada');
+          }),
+          mostrarMensagem(
+            "<p><strong>Rematrícula Confirmada com Sucesso!</strong></p><p>Sua rematrícula foi processada e suas aulas começam em breve.</p><br><p>Você receberá um e-mail com todos os detalhes.</p><br><p>Bem-vindo(a) de volta à PUC Minas!</p>",
+            "sucesso"
+          );
+      });
+    </script>
+  </body>
+</html>

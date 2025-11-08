@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rematrícula - Seleção de Disciplinas</title>
+    <link rel="shortcut icon" href="../imagens/pucMinasCanvasLogo.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../estilos/estilo--principal.css" />
+    <link rel="stylesheet" href="../estilos/estilo--responsivo.css" />
+  </head>
+
+  <body>
+    <div class="repositorio--mensagens" id="repositorioMensagens"></div>
+    <div class="pagina">
+      <header class="barra--superior">
+        <div class="marca--sistema">
+          PUC Minas <span class="texto--suave">• Rematrícula</span>
+        </div>
+        <nav class="navegacao--superior">
+          <span class="perfil--usuario" id="perfilUsuario"></span
+          ><a href="confirmacao.html" class="link--navegacao">Confirmar</a
+          ><button id="botaoSair" class="botao--principal">Sair</button>
+        </nav>
+      </header>
+      <main class="area--central">
+        <section class="cartao--container">
+          <h2 class="titulo--principal">Selecione suas disciplinas</h2>
+          <p class="texto--destaque">
+            Marque as disciplinas que deseja cursar no próximo período.
+          </p>
+          <form id="formularioRematricula" class="formulario formulario--pilha">
+            <div class="grade--checagem-disciplinas">
+              <label class="checagem--disciplinas"
+                ><input type="checkbox" value="Segurança da Informação" /><span
+                  class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Segurança da Informação</span></label
+              ><label class="checagem--disciplinas"
+                ><input type="checkbox" value="Engenharia de Software" /><span
+                  class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Engenharia de Software</span></label
+              ><label class="checagem--disciplinas"
+                ><input type="checkbox" value="Banco de Dados II" /><span
+                  class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Banco de Dados II</span></label
+              ><label class="checagem--disciplinas"
+                ><input type="checkbox" value="Redes de Computadores" /><span
+                  class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Redes de Computadores</span></label
+              ><label class="checagem--disciplinas"
+                ><input type="checkbox" value="Filosofia e Ética" /><span
+                  class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Filosofia e Ética</span></label
+              ><label class="checagem--disciplinas"
+                ><input type="checkbox" value="Lógica Computacional" /><span
+                  class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Lógica Computacional</span></label
+              ><label class="checagem--disciplinas"
+                ><input
+                  type="checkbox"
+                  value="Desenvolvimento Web Avançado"
+                /><span class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Desenvolvimento Web Avançado</span></label
+              ><label class="checagem--disciplinas"
+                ><input type="checkbox" value="Gestão de Projetos de TI" /><span
+                  class="checagem--personalizada"
+                  ><i class="fas fa-check"></i></span
+                ><span>Gestão de Projetos de TI</span></label
+              >
+            </div>
+            <div class="campo--formulario">
+              <label for="turno">Escolha a modalidade</label>
+              <div class="escolhas--selecao">
+                <select id="turno" class="selecao--campo" required>
+                  <option value="" disabled selected>
+                    Selecione a modalidade
+                  </option>
+                  <option value="EAD">EAD - Ensino a Distância</option>
+                  <option value="Presencial Manhã">
+                    Presencial Manhã - 08h - 10h
+                  </option>
+                  <option value="Presencial Tarde">
+                    Presencial Tarde - 14h - 16h
+                  </option>
+                  <option value="Presencial Noite">
+                    Presencial Noite - 20h - 22h
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="simulador--financeiro">
+              <h3><i class="fas fa-calculator"></i> Simulação Financeira</h3>
+              <div class="cartoes--financeiros">
+                <div class="cartao--financeiro" id="cartaoDisciplinas">
+                  <div class="rotulo">Disciplinas Selecionadas</div>
+                  <div class="valor" id="contadorDisciplinas">0</div>
+                  <div class="rotulo">unidades</div>
+                </div>
+                <div class="cartao--financeiro" id="cartaoMensal">
+                  <div class="rotulo">Parcela Mensal</div>
+                  <div class="valor" id="valorMensal">R$ 0,00</div>
+                  <div class="rotulo">por mês</div>
+                </div>
+                <div class="cartao--financeiro" id="cartaoPeriodo">
+                  <div class="rotulo">Período do Curso</div>
+                  <div class="valor">30</div>
+                  <div class="rotulo">meses</div>
+                </div>
+              </div>
+              <div id="repositorioDesconto"></div>
+              <div class="resumo--financeiro">
+                <div class="rotulo--total">Investimento Total</div>
+                <div class="valor--total" id="valorTotal">R$ 0,00</div>
+                <div class="periodo">Para todo o período do curso</div>
+              </div>
+            </div>
+            <div class="acoes--botoes">
+              <button type="button" id="botaoSalvar" class="botao--principal">
+                Salvar e Avançar</button
+              ><button
+                type="button"
+                id="botaoLimpar"
+                class="botao--principal botao--demonstracao"
+              >
+                Limpar
+              </button>
+            </div>
+          </form>
+        </section>
+      </main>
+      <footer class="rodape">
+        <small
+          >© 2025 Grupo 4 — Protótipo rematrícula navegável — PUC Minas.</small
+        >
+      </footer>
+    </div>
+    <script>
+      function mostrarMensagem(e, t = "info") {
+        const n = document.getElementById("repositorioMensagens"),
+          c = document.createElement("div");
+        let o = "fas fa-info-circle";
+        t === "sucesso"
+          ? (o = "fas fa-check-circle")
+          : t === "erro"
+          ? (o = "fas fa-times-circle")
+          : t === "alerta"
+          ? (o = "fas fa-exclamation-triangle")
+          : (o = "fas fa-info-circle"),
+          (c.className =
+            t === "erro"
+              ? "mensagem--item mensagem--erro"
+              : t === "alerta"
+              ? "mensagem--item mensagem--alerta"
+              : "mensagem--item mensagem--sucesso"),
+          (c.innerHTML = `<i class="${o}"></i><div class="conteudo--mensagem">${e}</div><button class="fechar--mensagem"><i class="fas fa-times"></i></button>`),
+          n.appendChild(c);
+        const i = c.querySelector(".fechar--mensagem"),
+          a = () => {
+            (c.style.animation = "mensagemSaida 0.4s ease forwards"),
+              setTimeout(() => {
+                n.contains(c) && n.removeChild(c);
+              }, 400);
+          };
+        i.addEventListener("click", a), setTimeout(a, 1e4);
+      }
+      function verificarPrazoRematricula() {
+        const e = new Date("2025-12-01"),
+          t = new Date();
+        return t > e;
+      }
+      function limparDadosRematricula() {
+        localStorage.removeItem("usuario_logado");
+        localStorage.removeItem("nome_usuario");
+        localStorage.removeItem("disciplinas_selecionadas");
+        localStorage.removeItem("turno_selecionado");
+        localStorage.removeItem("dados_financeiros");
+        localStorage.setItem("aba_ativa_registro", "true");
+        window.location.href = "../../index.html";
+      }
+      if (localStorage.getItem("usuario_logado") !== "true") {
+        window.location.href = "../../index.html";
+      }
+      const perfilUsuario = document.getElementById("perfilUsuario");
+      const usuarioAtual = localStorage.getItem("nome_usuario") || "";
+      if (usuarioAtual) {
+        (perfilUsuario.textContent = usuarioAtual),
+          perfilUsuario.classList.add("perfil--usuario--ativo");
+      }
+      const botaoSair = document.getElementById("botaoSair");
+      botaoSair.addEventListener("click", () => {
+        limparDadosRematricula();
+      });
+      const selecionadasSalvas = JSON.parse(
+        localStorage.getItem("disciplinas_selecionadas") || "[]"
+      );
+      const turnoSalvo = localStorage.getItem("turno_selecionado") || "";
+      document
+        .querySelectorAll('.checagem--disciplinas input[type="checkbox"]')
+        .forEach((e) => {
+          selecionadasSalvas.includes(e.value) &&
+            ((e.checked = !0),
+            e.closest(".checagem--disciplinas").classList.add("selecionada"));
+        });
+      turnoSalvo && (document.getElementById("turno").value = turnoSalvo);
+      const botaoSalvar = document.getElementById("botaoSalvar"),
+        botaoLimpar = document.getElementById("botaoLimpar"),
+        contadorDisciplinas = document.getElementById("contadorDisciplinas"),
+        valorMensal = document.getElementById("valorMensal"),
+        valorTotal = document.getElementById("valorTotal"),
+        cartaoDisciplinas = document.getElementById("cartaoDisciplinas"),
+        cartaoMensal = document.getElementById("cartaoMensal"),
+        cartaoPeriodo = document.getElementById("cartaoPeriodo"),
+        repositorioDesconto = document.getElementById("repositorioDesconto");
+      function calcularDesconto(e) {
+        let t = 0;
+        return (
+          e >= 8 ? (t = 150) : e >= 7 ? (t = 100) : e >= 6 ? (t = 50) : (t = 0),
+          t
+        );
+      }
+      function atualizarFinanceiro() {
+        const e = document.querySelectorAll(
+          '.checagem--disciplinas input[type="checkbox"]:checked'
+        ).length;
+        contadorDisciplinas.textContent = e;
+        let t = 250 * e,
+          n = calcularDesconto(e),
+          c = t - n,
+          o = c * 30;
+        (valorMensal.innerHTML =
+          n > 0
+            ? `<span class="preco--original">R$ ${t.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</span> R$ ${c.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}`
+            : `R$ ${t.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}`),
+          (valorTotal.innerHTML =
+            n > 0
+              ? `<span class="preco--original">R$ ${(t * 30).toLocaleString(
+                  "pt-BR",
+                  { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                )}</span> R$ ${o.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`
+              : `R$ ${o.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`),
+          n > 0
+            ? ((repositorioDesconto.innerHTML = `<div class="informacao--desconto"><div class="texto--desconto">🎉 Parabéns! Você ganhou um desconto especial</div><div class="valor--desconto">R$ ${n.toLocaleString(
+                "pt-BR",
+                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+              )} de desconto mensal</div><div class="texto--desconto">Economia total de R$ ${(
+                n * 30
+              ).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })} no curso</div></div>`),
+              (cartaoMensal.innerHTML = `<div class="rotulo">Parcela Mensal <span class="selo--desconto">-R$ ${n}</span></div><div class="valor" id="valorMensalAnimado">${valorMensal.innerHTML}</div><div class="rotulo">por mês</div>`))
+            : ((repositorioDesconto.innerHTML = ""),
+              (cartaoMensal.innerHTML = `<div class="rotulo">Parcela Mensal</div><div class="valor" id="valorMensalAnimado">${valorMensal.innerHTML}</div><div class="rotulo">por mês</div>`)),
+          e > 0
+            ? (cartaoDisciplinas.classList.add("ativo"),
+              cartaoMensal.classList.add("ativo"),
+              cartaoPeriodo.classList.add("ativo"),
+              (contadorDisciplinas.style.animation = "bounce 0.6s ease"),
+              (document.getElementById("valorMensalAnimado").style.animation =
+                "bounce 0.6s ease 0.1s"),
+              (valorTotal.style.animation = "bounce 0.6s ease 0.2s"),
+              setTimeout(() => {
+                (contadorDisciplinas.style.animation = ""),
+                  (document.getElementById(
+                    "valorMensalAnimado"
+                  ).style.animation = ""),
+                  (valorTotal.style.animation = "");
+              }, 600))
+            : (cartaoDisciplinas.classList.remove("ativo"),
+              cartaoMensal.classList.remove("ativo"),
+              cartaoPeriodo.classList.remove("ativo"));
+      }
+      document
+        .querySelectorAll('.checagem--disciplinas input[type="checkbox"]')
+        .forEach((e) => {
+          e.addEventListener("change", function () {
+            this.checked
+              ? this.closest(".checagem--disciplinas").classList.add(
+                  "selecionada"
+                )
+              : this.closest(".checagem--disciplinas").classList.remove(
+                  "selecionada"
+                ),
+              atualizarFinanceiro();
+          });
+        }),
+        atualizarFinanceiro();
+      botaoSalvar.addEventListener("click", () => {
+        const e = Array.from(
+            document.querySelectorAll(
+              '.checagem--disciplinas input[type="checkbox"]:checked'
+            )
+          ).map((e) => e.value),
+          t = document.getElementById("turno").value;
+        if (e.length < 3)
+          return (
+            mostrarMensagem(
+              "<p><strong>Seleção Insuficiente</strong></p><p>Selecione pelo menos 3 disciplinas para continuar.</p>",
+              "erro"
+            ),
+            !1
+          );
+        if (!t)
+          return (
+            mostrarMensagem(
+              "<p><strong>Modalidade Não Selecionada</strong></p><p>Escolha a modalidade antes de avançar.</p>",
+              "erro"
+            ),
+            !1
+          );
+        if (verificarPrazoRematricula())
+          return (window.location.href = "prazo--expirado.html"), !1;
+        const n = 250 * e.length,
+          c = calcularDesconto(e.length),
+          o = n - c,
+          i = o * 30;
+        localStorage.setItem("disciplinas_selecionadas", JSON.stringify(e)),
+          localStorage.setItem("turno_selecionado", t),
+          localStorage.setItem(
+            "dados_financeiros",
+            JSON.stringify({
+              quantidadeDisciplinas: e.length,
+              valorMensal: o,
+              valorTotal: i,
+              desconto: c,
+            })
+          ),
+          (window.location.href = "confirmacao.html");
+      });
+      botaoLimpar.addEventListener("click", () => {
+        document
+          .querySelectorAll('.checagem--disciplinas input[type="checkbox"]')
+          .forEach((e) => {
+            (e.checked = !1),
+              e
+                .closest(".checagem--disciplinas")
+                .classList.remove("selecionada");
+          }),
+          (document.getElementById("turno").value = ""),
+          localStorage.removeItem("disciplinas_selecionadas"),
+          localStorage.removeItem("turno_selecionado"),
+          localStorage.removeItem("dados_financeiros"),
+          atualizarFinanceiro(),
+          mostrarMensagem(
+            "<p><strong>Limpeza Concluída</strong></p><p>Todas as seleções foram removidas.</p>",
+            "sucesso"
+          );
+      });
+    </script>
+  </body>
+</html>

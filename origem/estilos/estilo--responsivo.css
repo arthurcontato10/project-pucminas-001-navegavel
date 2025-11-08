@@ -1,0 +1,512 @@
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cardSlide {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40%,
+  43% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes mensagemEntrada {
+  0% {
+    transform: translateX(100%) scale(0.8);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateX(-10px) scale(1.02);
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mensagemSaida {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+
+  30% {
+    transform: translateX(-15px) scale(1.02);
+  }
+
+  100% {
+    transform: translateX(100%) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .navegacao--superior {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .barra--superior {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .container--abas {
+    flex-direction: column;
+  }
+
+  .grade--checagem {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao--container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .acoes--botoes {
+    flex-direction: column;
+  }
+
+  .grade--checagem-disciplinas {
+    grid-template-columns: 1fr;
+  }
+
+  .cartoes--financeiros {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .grade--resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao--resumo {
+    padding: 1.5rem;
+  }
+
+  .principal--financeiro {
+    margin: 1rem 0;
+  }
+
+  .valor--financeiro {
+    padding: 1.5rem;
+  }
+
+  .valor--final {
+    font-size: 2rem;
+  }
+
+  .valor--final.unico {
+    font-size: 2rem;
+  }
+
+  .cartoes--pagamento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cartao--pagamento {
+    padding: 1rem;
+  }
+
+  .cartoes--financiamento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cartao--financiamento {
+    padding: 1.2rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .icone--financiamento {
+    margin: 0 auto;
+  }
+
+  .informacao--prazo {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .repositorio--mensagens {
+    left: 20px;
+    right: 20px;
+    top: 10px;
+  }
+
+  .mensagem--item {
+    width: auto;
+    min-width: auto;
+  }
+
+  .grade--opcoes {
+    grid-template-columns: 1fr;
+  }
+
+  .grupo--botoes {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .area--central {
+    padding: 0.5rem;
+  }
+
+  .cartao--container {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .simulador--financeiro {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .checagem--disciplinas {
+    padding: 0.8rem;
+  }
+
+  .campo--com-icone input {
+    padding-left: 2.5rem;
+  }
+
+  .campo--com-icone i:first-child {
+    left: 0.8rem;
+  }
+
+  .repositorio--status {
+    padding: 1rem;
+  }
+
+  .alerta--status {
+    padding: 1.5rem;
+  }
+
+  .cartao--opcao {
+    padding: 1.5rem;
+  }
+
+  .enviar--arquivo {
+    padding: 1.5rem;
+  }
+
+  .arquivo--enviado {
+    padding: 0.8rem;
+  }
+
+  .cartoes--pagamento {
+    grid-template-columns: 1fr;
+  }
+
+  .cartoes--financiamento {
+    grid-template-columns: 1fr;
+  }
+
+  .valor--final {
+    font-size: 1.8rem;
+  }
+
+  .valor--final.unico {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cartoes--pagamento[style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cartoes--financiamento[style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cartao--financiamento[style*="grid-column:1/-1"] {
+    grid-column: 1 !important;
+  }
+
+  .icone--destaque {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+    margin-right: 8px;
+  }
+
+  .lista--discos {
+    padding: 0;
+  }
+
+  .lista--discos li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .estatisticas--resumo p {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .caracteristicas--resumo ul li {
+    flex-direction: column;
+    align-items: flex-center;
+    gap: 0.25rem;
+  }
+
+  .valor--final {
+    font-size: 2rem !important;
+  }
+
+  .valor--final.unico {
+    font-size: 2rem !important;
+  }
+
+  .principal--financeiro {
+    margin: 1rem 0;
+  }
+
+  .cartao--pagamento--azul {
+    padding: 1rem;
+  }
+
+  .informacao--pagamento {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .cartoes--pagamento[style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cartoes--financiamento[style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .icone--destaque {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    margin-right: 6px;
+  }
+
+  .cartao--opcao {
+    padding: 1rem;
+  }
+
+  .grade--opcoes {
+    gap: 1rem;
+  }
+
+  .valor--final {
+    font-size: 1.8rem !important;
+  }
+
+  .valor--final.unico {
+    font-size: 1.8rem !important;
+  }
+
+  .valor--original {
+    font-size: 1.1rem;
+  }
+
+  .cartao--pagamento--azul {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .icone--pagamento {
+    margin: 0 auto;
+  }
+
+  .informacao--prazo {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .informacao--prazo i {
+    font-size: 1.2rem;
+  }
+
+  .informacao--prazo span {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .icone--titulo {
+    width: auto;
+    height: auto;
+    font-size: 1.2rem;
+  }
+
+  .icone--secao {
+    width: 45px;
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+
+  .cartao--termos .conteudo--termos h3 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .secao--termo {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .lista--termos li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  .acoes--centrais {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 2rem 0 1.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .icone--titulo {
+    width: auto;
+    height: auto;
+    font-size: 1.1rem;
+    margin-right: 10px;
+  }
+
+  .icone--secao {
+    font-size: 1.1rem;
+  }
+
+  .lista--sem-marcadores li i {
+    width: 1.8rem !important;
+  }
+
+  .cartao--termos .conteudo--termos h3 {
+    font-size: 1.1rem;
+  }
+
+  .cartao--termos .conteudo--termos h3 i {
+    width: auto;
+    height: auto;
+    margin: auto;
+    padding: auto;
+  }
+
+  .secao--termo {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .lista--termos li {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .conteudo--termos p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .informacao--destaque {
+    padding: 1rem;
+  }
+
+  .informacao--contato ul li {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+}
